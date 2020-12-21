@@ -8,76 +8,39 @@ namespace _12._Cups_and_Bottles
     {
         static void Main(string[] args)
         {
-            int[] arr = Console
-                          .ReadLine()
-                          .Split(" ")
-                          .Select(int.Parse)
-                          .ToArray();
-            int count = 0;
-            int pushNum = 0;
-            int popNum = 0;
-            int findNum = 0;
-            for (int i = 1; i <= 3; i++)
+            Queue<int> queueCups = new Queue<int>
+                (Console.ReadLine().Split().Select(int.Parse));//cups
+            Stack<int> stackBottles = new Stack<int>
+                (Console.ReadLine().Split().Select(int.Parse));
+            int wastedWater = 0;
+            while (queueCups.Count > 0 && stackBottles.Count > 0)
             {
-                if (i == 1)
+                int currCups = queueCups.Peek();
+                int currBottle = stackBottles.Pop();
+                if (currBottle - currCups >= 0)
                 {
-                    pushNum = arr[count];
-
-                }
-                else if (i == 2)
-                {
-                    popNum = arr[count];
-
+                    queueCups.Dequeue();
+                    wastedWater += currBottle - currCups;
                 }
                 else
                 {
-
-                    findNum = arr[count];
-                }
-                count++;
-
-            }
-            int[] numbers = Console
-                             .ReadLine()
-                             .Split(" ")
-                             .Select(int.Parse)
-                             .ToArray();
-
-            var elements = new Stack<int>();
-
-            for (int i = 0; i < pushNum; i++)
-            {
-                elements.Push(numbers[i]);
-            }
-            for (int i = 0; i < popNum; i++)
-            {
-                elements.Pop();
-            }
-
-            if (elements.Contains(findNum))
-            {
-                Console.WriteLine("true");
-            }
-            else if (elements.Count == 0)
-            {
-                Console.WriteLine(0);
-            }
-            else
-            {
-                int minNum = int.MaxValue;
-                int curMinNum = 0;
-                while (elements.Any())
-                {
-
-                    curMinNum = elements.Pop();
-                    if (minNum > curMinNum)
+                    while (currBottle < currCups)
                     {
-                        minNum = curMinNum;
+                        currBottle += stackBottles.Pop();
                     }
+                    wastedWater += currBottle - currCups;
+                    queueCups.Dequeue();
                 }
-                Console.WriteLine(minNum);
             }
-
+            if (queueCups.Count > 0)
+            {
+                Console.WriteLine($"Cups: {string.Join(" ", queueCups)}");
+            }
+            else if (stackBottles.Count > 0)
+            {
+                Console.WriteLine($"Bottles: {string.Join(" ", stackBottles)}");
+            }
+            Console.WriteLine($"Wasted litters of water: {wastedWater}");
         }
     }
 }
