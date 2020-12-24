@@ -6,7 +6,9 @@ namespace _9._Miner
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
+
+
         }
     }
 }
