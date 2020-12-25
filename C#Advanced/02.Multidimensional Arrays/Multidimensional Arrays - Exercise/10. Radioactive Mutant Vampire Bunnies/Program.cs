@@ -6,7 +6,8 @@ namespace _10._Radioactive_Mutant_Vampire_Bunnies
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            int name = int.Parse(Console.ReadLine());
+            Console.WriteLine(name);
         }
     }
 }
