@@ -23,15 +23,16 @@ namespace last_exercise
             int Pcol = 0;
             FindSartPosition(matrix, ref Prow, ref Pcol);
 
-            bool isInside = false;
             bool isDied = false;
             int diedRow = 0;
             int diedCol = 0;
 
             int wonRow = 0;
             int wondCol = 0;
+            int count = commands.Length;
             foreach (var command in commands)
             {
+                count--;
                 if (command == 'U')
                 {
                     if (IsInside(matrix, Prow - 1, Pcol))
@@ -39,17 +40,14 @@ namespace last_exercise
                         if (matrix[Prow - 1, Pcol] == 'B')
                         {
                             isDied = true;
+
                         }
                         matrix[Prow, Pcol] = '.';
                         matrix[Prow - 1, Pcol] = 'P';
-                        isInside = true;
                         Prow--;
                     }
-                    else
-                    {
-                        wonRow = Prow ;
-                        wondCol = Pcol;
-                    }
+                    SetIndex(Prow, Pcol, out diedRow, out diedCol, out wonRow, out wondCol);
+
                 }
                 else if (command == 'L')
                 {
@@ -61,14 +59,13 @@ namespace last_exercise
                         }
                         matrix[Prow, Pcol] = '.';
                         matrix[Prow, Pcol - 1] = 'P';
-                        isInside = true;
                         Pcol--;
                     }
-                    else
-                    {
-                        wonRow = Prow;
-                        wondCol = Pcol;
-                    }
+                    diedRow = Prow;
+                    diedCol = Pcol;
+                    wonRow = Prow;
+                    wondCol = Pcol;
+
                 }
                 else if (command == 'R')
                 {
@@ -76,18 +73,17 @@ namespace last_exercise
                     {
                         if (matrix[Prow, Pcol + 1] == 'B')
                         {
+
                             isDied = true;
                         }
                         matrix[Prow, Pcol] = '.';
                         matrix[Prow, Pcol + 1] = 'P';
-                        isInside = true;
                         Pcol++;
                     }
-                    else
-                    {
-                        wonRow = Prow;
-                        wondCol = Pcol ;
-                    }
+                    diedRow = Prow;
+                    diedCol = Pcol;
+                    wonRow = Prow;
+                    wondCol = Pcol;
                 }
                 else if (command == 'D')
                 {
@@ -95,18 +91,17 @@ namespace last_exercise
                     {
                         if (matrix[Prow + 1, Pcol] == 'B')
                         {
+
                             isDied = true;
                         }
                         matrix[Prow, Pcol] = '.';
                         matrix[Prow + 1, Pcol] = 'P';
-                        isInside = true;
                         Prow++;
                     }
-                    else
-                    {
-                        wonRow = Prow ;
-                        wondCol = Pcol;
-                    }
+                    diedRow = Prow;
+                    diedCol = Pcol;
+                    wonRow = Prow;
+                    wondCol = Pcol;
                 }
                 for (int row = 0; row < matrix.GetLength(0); row++)
                 {
@@ -114,7 +109,7 @@ namespace last_exercise
                     {
                         if (matrix[row, col] == 'B')
                         {
-                            if (IsInside(matrix, row - 1, col))
+                            if (IsInside(matrix, row - 1, col)&&matrix[row-1,col]!='B')
                             {
                                 if (matrix[row - 1, col] == 'P')
                                 {
@@ -124,7 +119,7 @@ namespace last_exercise
                                 }
                                 matrix[row - 1, col] = 'B';
                             }
-                            if (IsInside(matrix, row +1, col))
+                            if (IsInside(matrix, row + 1, col) && matrix[row+1, col] != 'B')
                             {
                                 if (matrix[row + 1, col] == 'P')
                                 {
@@ -134,9 +129,9 @@ namespace last_exercise
                                 }
                                 matrix[row + 1, col] = 'B';
                             }
-                            if (IsInside(matrix, row, col - 1))
+                            if (IsInside(matrix, row, col - 1) && matrix[row, col - 1] != 'B')
                             {
-                                if (matrix[row , col-1] == 'P')
+                                if (matrix[row, col - 1] == 'P')
                                 {
                                     isDied = true;
                                     diedRow = row;
@@ -144,9 +139,9 @@ namespace last_exercise
                                 }
                                 matrix[row, col - 1] = 'B';
                             }
-                            if (IsInside(matrix, row, col + 1))
+                            if (IsInside(matrix, row, col + 1)&& matrix[row, col + 1] != 'B')
                             {
-                                if (matrix[row, col+1] == 'P')
+                                if (matrix[row, col + 1] == 'P')
                                 {
                                     isDied = true;
                                     diedRow = row;
@@ -159,26 +154,28 @@ namespace last_exercise
                 }
                 if (isDied)
                 {
-                    break;
+                    PrintMatrix(matrix);
+                    Console.WriteLine($"dead: {diedRow} {diedCol}");
+                    return;
                 }
-                if (!isInside)
+                if (!isDied && count == 0)
                 {
-                    break;
+                    PrintMatrix(matrix);
+                    Console.WriteLine($"won: {wonRow} {wondCol}");
+                    return;
                 }
-                //?
-                //TO DO...
-            }
-            ;
-            PrintMatrix(matrix);
-            if (!isDied)
-            {
-                Console.WriteLine($"won: {wonRow} {wondCol}");
-            }
-            else
-            {
-                Console.WriteLine($"dead: {diedRow} {diedCol}");
             }
         }
+
+        private static void SetIndex(int Prow, int Pcol, out int diedRow, out int diedCol, out int wonRow, out int wondCol)
+        {
+            diedRow = Prow;
+            diedCol = Pcol;
+
+            wonRow = Prow;
+            wondCol = Pcol;
+        }
+
         private static void PrintMatrix(char[,] matrix)
         {
             for (int rows = 0; rows < matrix.GetLength(0); rows++)

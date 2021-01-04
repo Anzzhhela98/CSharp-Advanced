@@ -5,6 +5,8 @@ namespace _9._Miner
 {
     class Program
     {
+        static int Scol;
+        static int Srow;
         static void Main(string[] args)
         {
             int size = int.Parse(Console.ReadLine());
@@ -16,15 +18,7 @@ namespace _9._Miner
             char[,] matrix = new char[size, size];
             ReadInput(matrix);
 
-            int Srow = 0;
-            int Scol = 0;
-            FindStart(matrix, ref Srow, ref Scol);
-
             bool IsInRange = false;
-
-            int valueOfCoals = matrix.Cast<char>().Where(x => x == 'c').Count();
-
-            int currentValueOfCoals = 0;
             int rowIndex = 0;
             int colIndex = 0;
 
@@ -79,15 +73,7 @@ namespace _9._Miner
                 {
                     if (letter == 'c')
                     {
-                        currentValueOfCoals++;
                         matrix[rowIndex, colIndex] = '*';
-                        if (valueOfCoals == currentValueOfCoals)
-                        {
-                            Console.WriteLine($"You collected all coals!" +
-                                $" ({rowIndex}, {colIndex})");
-                            return;
-                        }
-                        continue;
                     }
                     if (letter == 'e')
                     {
@@ -96,24 +82,11 @@ namespace _9._Miner
                     }
                 }
             }
-            Console.WriteLine($"{valueOfCoals - currentValueOfCoals} coals left. ({rowIndex}, {colIndex})");
+            int countCoalsLeft = matrix.Cast<char>().Count(symbol => symbol == 'c');
+            Console.WriteLine(countCoalsLeft == 0
+                ? $"You collected all coals! ({rowIndex}, {colIndex})"
+                : $"{countCoalsLeft} coals left. ({rowIndex}, {colIndex})");
         }
-        private static void FindStart(char[,] matrix, ref int Srow, ref int Scol)
-        {
-            for (int row = 0; row < matrix.GetLength(0); row++)
-            {
-
-                for (int col = 0; col < matrix.GetLength(1); col++)
-                {
-                    if (matrix[row, col] == 's')
-                    {
-                        Srow = row;
-                        Scol = col;
-                    }
-                }
-            }
-        }
-
         private static void ReadInput(char[,] matrix)
         {
             for (int row = 0; row < matrix.GetLength(0); row++)
@@ -126,10 +99,15 @@ namespace _9._Miner
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
                     matrix[row, col] = input[col];
+                    if (matrix[row, col] == 's')
+                    {
+                        Srow = row;
+                        Scol = col;
+
+                    }
                 }
             }
         }
-
         private static bool IsInside(char[,] matrix, int row, int col)
         {
             return row >= 0 && row < matrix.GetLength(0)
