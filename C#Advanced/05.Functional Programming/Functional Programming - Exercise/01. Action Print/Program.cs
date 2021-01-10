@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _01._Action_Print
 {
@@ -6,7 +8,12 @@ namespace _01._Action_Print
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Action<string> print = x => Console.WriteLine($"{string.Join("/n", x)}");
+
+            Console.ReadLine()
+                        .Split(" ",StringSplitOptions.RemoveEmptyEntries)
+                        .ToList()
+                        .ForEach(print);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace _08._Custom_Comparator
 {
@@ -6,7 +7,16 @@ namespace _08._Custom_Comparator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            int end = int.Parse(Console.ReadLine());
+
+            int[] divider = Console
+                          .ReadLine()
+                          .Split()
+                          .Select(int.Parse)
+                          .ToArray();
+            bool isDivided = true;
+
         }
+
     }
 }

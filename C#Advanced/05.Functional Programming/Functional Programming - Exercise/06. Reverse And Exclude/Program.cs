@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _06._Reverse_And_Exclude
 {
@@ -6,7 +8,27 @@ namespace _06._Reverse_And_Exclude
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            int[] number = Console
+                                .ReadLine()
+                                .Split()
+                                .Select(int.Parse)
+                                .Reverse()
+                                .ToArray();
+
+
+            int num = int.Parse(Console.ReadLine());
+
+            List<int> listOfNumber = new List<int>();
+         
+            Predicate<int> remove = n => n % num == 0;
+           
+            foreach (var n in number)
+            {
+                if (!remove(n))
+                {
+                    Console.Write($"{n} ");
+                }
+            }
         }
     }
 }
