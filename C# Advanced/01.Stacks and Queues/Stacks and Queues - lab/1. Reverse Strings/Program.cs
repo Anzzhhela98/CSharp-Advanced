@@ -27,7 +27,6 @@ namespace _1._Reverse_Strings
                 Console.Write($"{stack.Pop()} ");
 
             }
-            //Console.WriteLine(string.Join(" ", stack));
         }
     }
 }
