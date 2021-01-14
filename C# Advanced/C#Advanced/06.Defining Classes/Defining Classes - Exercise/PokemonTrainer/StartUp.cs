@@ -8,7 +8,7 @@ namespace PokemonTrainer
     {
         static void Main(string[] args)
         {
-            var trainers =
+            Dictionary<string, Trainer> trainers =
                    new Dictionary<string, Trainer>();
 
             string command = string.Empty;
