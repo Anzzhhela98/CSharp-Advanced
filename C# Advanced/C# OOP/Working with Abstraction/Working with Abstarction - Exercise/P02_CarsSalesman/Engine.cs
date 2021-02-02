@@ -31,10 +31,10 @@ namespace P02_CarsSalesman
             this.Displacement = displacement;
             this.Efficiency = efficiency;
         }
-        public string Model { get; set; }
-        public int Power { get; set; }
-        public int Displacement { get; set; }
-        public string Efficiency { get; set; }
+        public string Model { get; private set; }
+        public int Power { get; private set; }
+        public int Displacement { get; private set; }
+        public string Efficiency { get; private set; }
 
         public override string ToString()
         {

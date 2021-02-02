@@ -2,7 +2,7 @@
 
 namespace P02_CarsSalesman
 {
-    class Car
+    public class Car
     {
         private const string offset = "  ";
 
@@ -41,7 +41,7 @@ namespace P02_CarsSalesman
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"{this.Model}:");
-            sb.Append(this.Engine.ToString());
+            sb.AppendLine(this.Engine.ToString());
             sb.AppendLine($"{offset}Weight: {(this.Weight == -1 ? "n/a" : this.Weight.ToString())}");
             sb.AppendLine($"{offset}Color: {this.Color}");
 
