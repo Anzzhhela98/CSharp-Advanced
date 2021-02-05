@@ -20,7 +20,7 @@
                 string name = animalInfo[0];
                 int age = int.Parse(animalInfo[1]);
                 string gender = animalInfo[2];
-                
+
                 switch (type)
                 {
                     case "Dog":
