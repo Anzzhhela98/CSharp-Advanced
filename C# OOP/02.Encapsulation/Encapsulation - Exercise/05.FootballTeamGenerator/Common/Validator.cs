@@ -10,5 +10,12 @@
 
         public static string INVALID_NAME =
             "A {0} should not be empty.";
+
+        public static string INVALID_PLAYER_NAME =
+             "Player {1} is not in {2} team.";
+
+        public static string INVALID_TEAM_NAME =
+            "Team {0} does not exist.";
+
     }
 }

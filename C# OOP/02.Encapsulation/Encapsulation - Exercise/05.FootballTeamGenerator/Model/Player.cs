@@ -6,6 +6,12 @@ namespace _05.FootballTeamGenerator.Model
     {
         private string name;
 
+        public Player(string name, Stats stats)
+        {
+            this.Name = name;
+            this.Stats = stats;
+        }
+
         public string Name
         {
             get => this.name;
@@ -20,6 +26,7 @@ namespace _05.FootballTeamGenerator.Model
             }
         }
         public Stats Stats { get; set; }
-        
+
+        public double Skills => this.Stats.Average();
     }
 }

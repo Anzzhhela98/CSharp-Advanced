@@ -11,11 +11,11 @@ namespace _05.FootballTeamGenerator.Model
 
         public Stats(int endurance, int sprint, int dribble, int passing, int shooting)
         {
-           this.Endurance = endurance;
-           this.Sprint = sprint;
-           this.Dribble = dribble;
-           this.Passing = passing;
-           this.Shooting = shooting;
+            this.Endurance = endurance;
+            this.Sprint = sprint;
+            this.Dribble = dribble;
+            this.Passing = passing;
+            this.Shooting = shooting;
         }
 
         private int Endurance
@@ -24,7 +24,8 @@ namespace _05.FootballTeamGenerator.Model
             {
                 if (!IsValid(value))
                 {
-                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Endurance)));
+                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting,
+                        nameof(this.Endurance), Common.Validator.MIN_VALUE_OF_STATS, Common.Validator.MAX_VALUE_OF_STATS));
                 }
                 this.endurance = value;
             }
@@ -35,7 +36,8 @@ namespace _05.FootballTeamGenerator.Model
             {
                 if (!IsValid(value))
                 {
-                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Sprint)));
+                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting,
+                        nameof(this.Sprint), Common.Validator.MIN_VALUE_OF_STATS, Common.Validator.MAX_VALUE_OF_STATS));
                 }
                 this.sprint = value;
             }
@@ -46,7 +48,8 @@ namespace _05.FootballTeamGenerator.Model
             {
                 if (!IsValid(value))
                 {
-                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Dribble)));
+                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Dribble),
+                         Common.Validator.MIN_VALUE_OF_STATS, Common.Validator.MAX_VALUE_OF_STATS));
                 }
                 this.dribble = value;
             }
@@ -57,7 +60,8 @@ namespace _05.FootballTeamGenerator.Model
             {
                 if (!IsValid(value))
                 {
-                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Passing)));
+                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting,
+                        nameof(this.Passing), Common.Validator.MIN_VALUE_OF_STATS, Common.Validator.MAX_VALUE_OF_STATS));
                 }
                 this.passing = value;
             }
@@ -68,7 +72,8 @@ namespace _05.FootballTeamGenerator.Model
             {
                 if (!IsValid(value))
                 {
-                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting, nameof(this.Shooting)));
+                    throw new ArgumentException(String.Format(Common.Validator.InavlidRaiting,
+                        nameof(this.Shooting), Common.Validator.MIN_VALUE_OF_STATS, Common.Validator.MAX_VALUE_OF_STATS));
                 }
                 this.shooting = value;
             }
