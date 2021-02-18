@@ -8,33 +8,35 @@ namespace _01._Scheduling
     {
         static void Main(string[] args)
         {
-            var task = new Stack<int>(Console.ReadLine().Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
-            var thread = new Queue<int>(Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
 
-            int numberToKill = int.Parse(Console.ReadLine());
+            Stack<int> tasks =
+                new Stack<int>(Console.ReadLine().Split(", ").Select(int.Parse).ToArray());
+
+            Queue<int> threads =
+                new Queue<int>(Console.ReadLine().Split(" ").Select(int.Parse).ToArray());
+
+            int value = int.Parse(Console.ReadLine());
 
             bool isKilled = false;
+            int thread = 0;
 
             while (!isKilled)
             {
-
-                int currentTask = task.Peek();
-                int currentTread = thread.Peek();
-
-                if (currentTask == numberToKill)
+                int task = tasks.Peek();
+                thread = threads.Dequeue();
+                if (task == value)
                 {
-                    Console.WriteLine($"Thread with value {currentTread} killed task {numberToKill}");
                     isKilled = true;
-                    break;
+                    tasks.Pop();
+                    Console.WriteLine($"Thread with value {thread} killed task {value}");
+                    continue;
                 }
-                else if (currentTread >= currentTask)
+                if (thread >= task)
                 {
-                    task.Pop();
+                    tasks.Pop();
                 }
-
-                thread.Dequeue();
             }
-            Console.WriteLine(String.Join(" ", thread));
+            Console.WriteLine($"{thread} {string.Join(" ", threads)}");
         }
     }
 }

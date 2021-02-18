@@ -10,7 +10,7 @@
 
             //Initialize entity 
 
-            
+
             Employee employee = new Employee("Stephen", 40, "Bulgaria");
 
             //Print Employee 
@@ -41,7 +41,7 @@
 
             Employee employeeStephen = bakery.GetEmployee("Stephen"); // Employee with name Stephen 
 
-           
+
             Console.WriteLine(oldestEmployee);  //Employee: Stephen, 40(Bulgaria)
             Console.WriteLine(employeeStephen); //Employee: Stephen, 40 (Bulgaria) 
 

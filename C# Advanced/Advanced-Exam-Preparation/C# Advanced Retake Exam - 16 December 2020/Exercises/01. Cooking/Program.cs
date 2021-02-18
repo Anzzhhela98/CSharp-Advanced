@@ -10,23 +10,23 @@ namespace _01._Cooking
         {
             var prodcuts = new Dictionary<string, int>()
             {
-                ["Pastry"] = 0,
                 ["Bread"] = 0,
-                ["Fruit Pie"] = 0,
                 ["Cake"] = 0,
+                ["Fruit Pie"] = 0,
+                ["Pastry"] = 0,
 
             };
 
-            Queue<double> liquids;
-            Stack<double> ingredians;
+            Queue<int> liquids;
+            Stack<int> ingredians;
 
             ReadInput(out liquids, out ingredians);
 
-            while (liquids.Count != 0 && ingredians.Count != 0)
+            while (liquids.Any() && ingredians.Any())
             {
-                double liquid = liquids.Dequeue();
-                double ingredian = ingredians.Pop();
-                double amount = liquid + ingredian;
+                int liquid = liquids.Dequeue();
+                int ingredian = ingredians.Pop();
+                int amount = liquid + ingredian;
 
                 switch (amount)
                 {
@@ -53,15 +53,15 @@ namespace _01._Cooking
             Print(prodcuts, liquids, ingredians, isEvrithingCooked);
         }
 
-        private static void ReadInput(out Queue<double> liquids, out Stack<double> ingredians)
+        private static void ReadInput(out Queue<int> liquids, out Stack<int> ingredians)
         {
-            liquids = new Queue<double>
-                (Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(double.Parse));
-            ingredians = new Stack<double>
-(Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(double.Parse));
+            liquids = new Queue<int>
+                (Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+            ingredians = new Stack<int>
+(Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
         }
 
-        private static void Print(Dictionary<string, int> prodcuts, Queue<double> liquids, Stack<double> ingredians, bool isEvrithingCooked)
+        private static void Print(Dictionary<string, int> prodcuts, Queue<int> liquids, Stack<int> ingredians, bool isEvrithingCooked)
         {
             Console.WriteLine(isEvrithingCooked == true ? "Wohoo! You succeeded in cooking all the food!" : "Ugh, what a pity! You didn't have enough materials to cook everything.");
 
@@ -69,7 +69,7 @@ namespace _01._Cooking
 
             Console.WriteLine(ingredians.Count == 0 ? "Ingredients left: none" : $"Ingredients left: {string.Join(", ", ingredians)}");
 
-            foreach (var product in prodcuts.OrderBy(p => p.Key))
+            foreach (var product in prodcuts)
             {
                 Console.WriteLine($"{product.Key}: {product.Value}");
             }
