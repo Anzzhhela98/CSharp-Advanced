@@ -8,70 +8,77 @@ namespace _01._Cooking
     {
         static void Main(string[] args)
         {
-            var prodcuts = new Dictionary<string, int>()
-            {
-                ["Bread"] = 0,
-                ["Cake"] = 0,
-                ["Fruit Pie"] = 0,
-                ["Pastry"] = 0,
-
+            const int Bread = 25;
+            const int Cake = 50;
+            const int Pastry = 75;
+            const int FruitPie = 100;
+            Dictionary<string, int> bakedFoods = new Dictionary<string, int>
+            { {"Bread",0},
+              {"Cake",0},
+              {"Fruit Pie",0},
+              {"Pastry",0},
             };
 
-            Queue<int> liquids;
-            Stack<int> ingredians;
+            Queue<int> liquids =
+                new Queue<int>(Console.ReadLine().Split(" ").Select(int.Parse).ToArray());
 
-            ReadInput(out liquids, out ingredians);
+            Stack<int> ingredients =
+                new Stack<int>(Console.ReadLine().Split(" ").Select(int.Parse).ToArray());
 
-            while (liquids.Any() && ingredians.Any())
+
+            while (liquids.Any() && ingredients.Any())
             {
                 int liquid = liquids.Dequeue();
-                int ingredian = ingredians.Pop();
-                int amount = liquid + ingredian;
+                int ingredient = ingredients.Pop();
+                int sum = liquid + ingredient;
 
-                switch (amount)
+                switch (sum)
                 {
-                    case 25:
-                        prodcuts["Bread"] += 1;
+                    case Bread:
+                        bakedFoods["Bread"]++;
                         break;
-                    case 50:
-                        prodcuts["Cake"] += 1;
+                    case Cake:
+                        bakedFoods["Cake"]++;
                         break;
-                    case 75:
-                        prodcuts["Fruit Pie"] += 1;
+                    case Pastry:
+                        bakedFoods["Pastry"]++;
                         break;
-                    case 100:
-                        prodcuts["Pastry"] += 1;
+                    case FruitPie:
+                        bakedFoods["Fruit Pie"]++;
                         break;
                     default:
-                        ingredians.Push(ingredian + 3);
+                        ingredients.Push(ingredient + 3);
                         break;
                 }
             }
-
-            bool isEvrithingCooked = prodcuts.All(x => x.Value > 0);
-
-            Print(prodcuts, liquids, ingredians, isEvrithingCooked);
-        }
-
-        private static void ReadInput(out Queue<int> liquids, out Stack<int> ingredians)
-        {
-            liquids = new Queue<int>
-                (Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
-            ingredians = new Stack<int>
-(Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
-        }
-
-        private static void Print(Dictionary<string, int> prodcuts, Queue<int> liquids, Stack<int> ingredians, bool isEvrithingCooked)
-        {
-            Console.WriteLine(isEvrithingCooked == true ? "Wohoo! You succeeded in cooking all the food!" : "Ugh, what a pity! You didn't have enough materials to cook everything.");
-
-            Console.WriteLine(liquids.Count == 0 ? "Liquids left: none" : $"Liquids left: {string.Join(", ", liquids)}");
-
-            Console.WriteLine(ingredians.Count == 0 ? "Ingredients left: none" : $"Ingredients left: {string.Join(", ", ingredians)}");
-
-            foreach (var product in prodcuts)
+            if (bakedFoods.All(x => x.Value >= 1))
             {
-                Console.WriteLine($"{product.Key}: {product.Value}");
+                Console.WriteLine($"Wohoo! You succeeded in cooking all the food!");
+            }
+            else
+            {
+                Console.WriteLine("Ugh, what a pity! You didn't have enough materials to cook everything.");
+            }
+            if (liquids.Any())
+            {
+                Console.WriteLine($"Liquids left: {string.Join(", ", liquids)}");
+            }
+            else
+            {
+                Console.WriteLine("Liquids left: none");
+            }
+            if (ingredients.Any())
+            {
+                Console.WriteLine($"Ingredients left: {string.Join(", ", ingredients)}");
+            }
+            else
+            {
+                Console.WriteLine("Ingredients left: none");
+            }
+
+            foreach (var food in bakedFoods)
+            {
+                Console.WriteLine($"{food.Key}: {food.Value}");
             }
         }
     }
