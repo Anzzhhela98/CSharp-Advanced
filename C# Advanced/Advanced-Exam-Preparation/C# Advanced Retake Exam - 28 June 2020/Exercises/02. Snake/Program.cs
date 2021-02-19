@@ -1,221 +1,138 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace _02._Snake
+namespace Snake
 {
     class Program
     {
         static void Main(string[] args)
         {
-            const int NEED_FOOD = 10;
+            const int enaughFood = 10;
             int size = int.Parse(Console.ReadLine());
-
             char[,] matrix = new char[size, size];
 
-            int startRow = 0;
-            int startCol = 0;
-            List<int> burrowsPosition = new List<int>();
+            int startRow = -1;
+            int startCol = -1;
+            List<int> pillars = new List<int>();
 
-            InitialiseMatrix(matrix, ref startRow, ref startCol, burrowsPosition);
-            int quantutyFood = 0;
+            FillMatrix(matrix, ref startRow, ref startCol, pillars);
 
+            int quantityFood = 0;
             bool isOutside = false;
-            while (quantutyFood < NEED_FOOD && !isOutside)
+
+            while (quantityFood != enaughFood)
             {
                 string command = Console.ReadLine();
 
                 matrix[startRow, startCol] = '.';
 
-                if (command == "right")
+                startRow = MoveRow(startRow, command);
+                startCol = MoveCol(startCol, command);
+
+                if (!IsInside(matrix, startRow, startCol))
                 {
+                    isOutside = true;
+                    break;
+                }
 
-                    startCol += 1;
+                if (matrix[startRow, startCol] == '*')
+                {
+                    quantityFood++;
+                }
+                if (matrix[startRow, startCol] == 'B')
+                {
+                    matrix[startRow, startCol] = '.';
 
-                    if (IsInside(matrix, startRow, startCol))
+                    if (startRow == pillars[0] && startCol == pillars[1])
                     {
-                        if (matrix[startRow, startCol] == '*')
-                        {
-                            quantutyFood++;
-                        }
-
-                        else if (matrix[startRow, startCol] == 'B')
-                        {
-                            matrix[startRow, startCol] = '.';
-                            for (int i = 0; i < burrowsPosition.Count; i += 2)
-                            {
-                                if (startRow != burrowsPosition[i] && startCol != burrowsPosition[i + 1])
-                                {
-                                    startRow = burrowsPosition[i];
-                                    startCol = burrowsPosition[i + 1];
-                                }
-                            }
-                        }
-                        matrix[startRow, startCol] = 'S';
+                        startRow = pillars[2];
+                        startCol = pillars[3];
                     }
                     else
                     {
-                        isOutside = true;
+                        startRow = pillars[0];
+                        startCol = pillars[1];
                     }
                 }
-                else if (command == "left")
-                {
-                    startCol -= 1;
 
-                    if (IsInside(matrix, startRow, startCol))
-                    {
-                        if (matrix[startRow, startCol] == '*')
-                        {
-                            quantutyFood++;
-                        }
-
-                        else if (matrix[startRow, startCol] == 'B')
-                        {
-                            matrix[startRow, startCol] = '.';
-
-                            for (int i = 0; i < burrowsPosition.Count; i += 2)
-                            {
-                                if (startRow != burrowsPosition[i] && startCol != burrowsPosition[i + 1])
-                                {
-                                    startRow = burrowsPosition[i];
-                                    startCol = burrowsPosition[i + 1];
-                                }
-                            }
-                        }
-                        matrix[startRow, startCol] = 'S';
-                    }
-                    else
-                    {
-                        isOutside = true;
-                    }
-
-                }
-                else if (command == "down")
-                {
-                    startRow += 1;
-
-                    if (IsInside(matrix, startRow, startCol))
-                    {
-                        if (matrix[startRow, startCol] == '*')
-                        {
-                            quantutyFood++;
-                        }
-                        else if (matrix[startRow, startCol] == 'B')
-                        {
-                            matrix[startRow, startCol] = '.';
-                            for (int i = 0; i < burrowsPosition.Count; i += 2)
-                            {
-                                if (startRow != burrowsPosition[i] && startCol != burrowsPosition[i + 1])
-                                {
-                                    startRow = burrowsPosition[i];
-                                    startCol = burrowsPosition[i + 1];
-                                }
-                            }
-                        }
-                        matrix[startRow, startCol] = 'S';
-
-                    }
-                    else
-                    {
-                        isOutside = true;
-                    }
-
-                }
-                else if (command == "up")
-                {
-                    startRow -= 1;
-
-                    if (IsInside(matrix, startRow, startCol))
-                    {
-                        if (matrix[startRow, startCol] == '*')
-                        {
-                            quantutyFood++;
-                        }
-
-                        else if (matrix[startRow, startCol] == 'B')
-                        {
-                            matrix[startRow, startCol] = '.';
-
-                            for (int i = 0; i < burrowsPosition.Count; i += 2)
-                            {
-                                if (startRow != burrowsPosition[i] && startCol != burrowsPosition[i + 1])
-                                {
-                                    startRow = burrowsPosition[i];
-                                    startCol = burrowsPosition[i + 1];
-                                }
-                            }
-                        }
-                        matrix[startRow, startCol] = 'S';
-                    }
-                    else
-                    {
-                        isOutside = true;
-                    }
-                }
+                matrix[startRow, startCol] = 'S';
+            }
+            if (quantityFood == enaughFood)
+            {
+                Console.WriteLine("You won! You fed the snake.");
             }
             if (isOutside)
             {
                 Console.WriteLine("Game over!");
             }
-            if (quantutyFood == NEED_FOOD)
-            {
-                Console.WriteLine("You won! You fed the snake.");
-            }
-            Console.WriteLine($"Food eaten: {quantutyFood}");
 
-            PrintMatrix(matrix);
+            Console.WriteLine($"Food eaten: {quantityFood}");
+            Print(matrix);
         }
-
-        private static void PrintMatrix(char[,] matrix)
+        private static void Print(char[,] matrix)
         {
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
                     Console.Write(matrix[row, col]);
-
                 }
                 Console.WriteLine();
             }
         }
-
         private static bool IsInside(char[,] matrix, int row, int col)
         {
             return row >= 0 && row < matrix.GetLength(0)
-                && col >= 0 && col < matrix.GetLength(1);
+               && col >= 0 && col < matrix.GetLength(1);
         }
-
-        private static void InitialiseMatrix(char[,] matrix, ref int startRow, ref int startCol, List<int> burrowsPosition)
+        private static int MoveRow(int row, string command)
+        {
+            if (command == "up")
+            {
+                row--;
+            }
+            if (command == "down")
+            {
+                row++;
+            }
+            return row;
+        }
+        private static int MoveCol(int col, string command)
+        {
+            if (command == "right")
+            {
+                col++;
+            }
+            if (command == "left")
+            {
+                col--;
+            }
+            return col;
+        }
+        private static void FillMatrix(char[,] matrix, ref int startRow, ref int startCol, List<int> pillars)
         {
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                string data = Console.ReadLine();
+                string input = Console.ReadLine();
 
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    matrix[row, col] = data[col];
-
-                    FindStartPosition(matrix, ref startRow, ref startCol, row, col);
-
-                    FindBurrowsPoints(matrix, burrowsPosition, row, col);
+                    matrix[row, col] = input[col];
+                    FindPosition(ref startRow, ref startCol, pillars, row, input, col);
                 }
             }
         }
-
-        private static void FindBurrowsPoints(char[,] matrix, List<int> burrowsPosition, int row, int col)
+        private static void FindPosition(ref int startRow, ref int startCol, List<int> pillars, int row, string input, int col)
         {
-            if (matrix[row, col] == 'B')
-            {
-                burrowsPosition.Add(row);
-                burrowsPosition.Add(col);
-            }
-        }
-
-        private static void FindStartPosition(char[,] matrix, ref int startRow, ref int startCol, int row, int col)
-        {
-            if (matrix[row, col] == 'S')
+            if (input[col] == 'S')
             {
                 startRow = row;
                 startCol = col;
+            }
+            else if (input[col] == 'B')
+            {
+                pillars.Add(row);
+                pillars.Add(col);
             }
         }
     }

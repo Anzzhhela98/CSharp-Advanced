@@ -2,91 +2,86 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace _02._Snake
+namespace _01.Bombs
 {
     class Program
     {
         static void Main(string[] args)
         {
-            const int DaturaBombs = 40;
-            const int CherryBombs = 60;
-            const int SmokeBombs = 120;
+            const int Datura = 40;
+            const int Cherry = 60;
+            const int Smoke = 120;
 
-            var bombEffects =
-                  new Queue<int>(Console.ReadLine().Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
-            var bombCasing =
-                new Stack<int>(Console.ReadLine().Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
-
-            var bombPouch = new Dictionary<string, int>
+            Dictionary<string, int> pouchBomb = new Dictionary<string, int>
             {
-                {"Cherry Bombs", 0},
-                {"Datura Bombs",0},
-                {"Smoke Decoy Bombs",0}
+              {"Cherry Bombs",0},
+              {"Datura Bombs",0},
+              {"Smoke Decoy Bombs",0},
             };
-            bool isWrongSum = true;
+
+            Queue<int> bombs =
+               new Queue<int>(Console.ReadLine().Split(", ").Select(int.Parse).ToArray());
+
+            Stack<int> casings =
+                new Stack<int>(Console.ReadLine().Split(", ").Select(int.Parse).ToArray());
             bool isBombPouchFull = false;
 
-            while (bombCasing.Count > 0 && bombEffects.Count > 0 && isBombPouchFull == false)
+            while (bombs.Any() && casings.Any() && isBombPouchFull == false)
             {
-                isWrongSum = true;
-                int effect = bombEffects.Peek();
-                int casing = bombCasing.Pop();
+                int bomb = bombs.Peek();
+                int casing = casings.Pop();
+                int sum = bomb + casing;
 
-                int sum = effect + casing;
-
-                if (sum == DaturaBombs)
+                switch (sum)
                 {
-                    bombEffects.Dequeue();
-                    bombPouch["Datura Bombs"] += 1;
-                    isWrongSum = false;
-                }
-                else if (sum == CherryBombs)
-                {
-                    bombEffects.Dequeue();
-                    bombPouch["Cherry Bombs"] += 1;
-                    isWrongSum = false;
-                }
-                else if (sum == SmokeBombs)
-                {
-                    bombEffects.Dequeue();
-                    bombPouch["Smoke Decoy Bombs"] += 1;
-                    isWrongSum = false;
-                }
-                if (isWrongSum)
-                {
-                    bombCasing.Push(casing - 5);
+                    case Datura:
+                        bombs.Dequeue();
+                        pouchBomb["Datura Bombs"]++;
+                        break;
+                    case Cherry:
+                        bombs.Dequeue();
+                        pouchBomb["Cherry Bombs"]++;
+                        break;
+                    case Smoke:
+                        bombs.Dequeue();
+                        pouchBomb["Smoke Decoy Bombs"]++;
+                        break;
+                    default:
+                        casings.Push(casing - 5);
+                        break;
                 }
 
-                isBombPouchFull = bombPouch.All(x => x.Value >= 3);
+                isBombPouchFull = pouchBomb.All(x => x.Value >= 3);
             }
-            ;
-            if (isBombPouchFull)
-            {
-                Console.WriteLine("Bene! You have successfully filled the bomb pouch!");
-            }
-            else
+            if (!isBombPouchFull)
             {
                 Console.WriteLine("You don't have enough materials to fill the bomb pouch.");
             }
-            if (bombEffects.Count > 0)
+            else
             {
-                Console.WriteLine($"Bomb Effects: {string.Join(", ", bombEffects)}");
+                Console.WriteLine("Bene! You have successfully filled the bomb pouch!");
+            }
+            if (bombs.Any())
+            {
+                Console.WriteLine($"Bomb Effects: {string.Join(", ", bombs)}");
             }
             else
             {
                 Console.WriteLine("Bomb Effects: empty");
             }
-            if (bombCasing.Count > 0)
+            if (casings.Any())
             {
-                Console.WriteLine($"Bomb Casings: {string.Join(", ", bombCasing)}");
+                Console.WriteLine($"Bomb Casings: {string.Join(", ", casings)}");
             }
             else
             {
                 Console.WriteLine("Bomb Casings: empty");
             }
-            foreach (var bomb in bombPouch)
+
+            foreach (var bomb in pouchBomb)
             {
                 Console.WriteLine($"{bomb.Key}: {bomb.Value}");
+
             }
         }
     }
