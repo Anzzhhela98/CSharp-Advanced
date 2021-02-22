@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operations", "Operations\Operations.csproj", "{A07B02E1-E081-4B77-A893-2221F6DA8A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animals", "Animals\Animals.csproj", "{1C7BE934-E626-4E22-85F7-BE0C75B69BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csproj", "{AB415F5D-6E4B-4D62-9E30-A48F3A22A65F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A07B02E1-E081-4B77-A893-2221F6DA8A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A07B02E1-E081-4B77-A893-2221F6DA8A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A07B02E1-E081-4B77-A893-2221F6DA8A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A07B02E1-E081-4B77-A893-2221F6DA8A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C7BE934-E626-4E22-85F7-BE0C75B69BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C7BE934-E626-4E22-85F7-BE0C75B69BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C7BE934-E626-4E22-85F7-BE0C75B69BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C7BE934-E626-4E22-85F7-BE0C75B69BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB415F5D-6E4B-4D62-9E30-A48F3A22A65F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB415F5D-6E4B-4D62-9E30-A48F3A22A65F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB415F5D-6E4B-4D62-9E30-A48F3A22A65F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB415F5D-6E4B-4D62-9E30-A48F3A22A65F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE94E170-EA34-44D4-9888-B1541C59D668}
+	EndGlobalSection
+EndGlobal
