@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Vehicles_Extension.Contracts
+﻿namespace VehiclesExtension.Contracts
 {
-    interface IDriveable
+    public interface IDriveable
     {
-        string Drive(double distance);
+        void Drive(double distance);
     }
 }

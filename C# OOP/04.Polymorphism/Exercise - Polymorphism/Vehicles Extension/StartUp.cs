@@ -1,12 +1,13 @@
-﻿using System;
+﻿using VehiclesExtension.Core;
 
-namespace Vehicles_Extension
+namespace VehiclesExtension
 {
-   public class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-           
+            Engine engine = new Engine();
+            engine.Run();
         }
     }
 }
