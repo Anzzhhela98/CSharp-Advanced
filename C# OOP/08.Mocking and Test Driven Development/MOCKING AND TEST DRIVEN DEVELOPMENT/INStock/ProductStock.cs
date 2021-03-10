@@ -107,17 +107,22 @@ namespace INStock
             return this.productStock.OrderByDescending(x => x.Price).First();
         }
 
+        public bool Remove(IProduct product)
+        {
+            if (this.productStock.Contains(product))
+            {
+                this.productStock.Remove(product);
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerator<IProduct> GetEnumerator()
         {
             for (int i = 0; i < this.productStock.Count; i++)
             {
                 yield return this.productStock[i];
             }
-        }
-
-        public bool Remove(IProduct product)
-        {
-            throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();

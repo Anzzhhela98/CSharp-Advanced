@@ -24,6 +24,12 @@
         }
 
         [Test]
+        public void ConstructorShouldInitializeLabelCorrectly()
+        {
+            Assert.AreEqual("Chia", this.product.Label);
+        }
+
+        [Test]
         public void ConstructorShouldInitializeCollectionCorrectly()
         {
             int expected = 0;
@@ -40,6 +46,32 @@
             Assert.AreEqual(expectedCount, this.productStock.Count);
         }
 
+        [Test]
+        public void IndexeShouldTakeItemOnIndex()
+        {
+            this.productStock.Add(this.product);
+            IProduct extractedProduct = this.productStock[0];
+
+            Assert.AreEqual(0, product.CompareTo(extractedProduct));
+        }
+
+        [Test]
+        public void IndexerShouldSetItemOnIndex()
+        {
+            this.productStock.Add(this.product);
+
+            IProduct newProduct = new Product("Banana", 15.50M, 1);
+            this.productStock[0] = newProduct;
+
+            Assert.AreEqual(0, newProduct.CompareTo(this.productStock[0]));
+        }
+
+        [Test]
+        public void IndexeShouldThrowIndexOutOfRangeExceptionInAttemptToTakeProductOnInvalidIndex()
+        {
+            //Assert.Throws<IndexOutOfRangeException>(() => this.productStock[0].CompareTo(this.productStock[3]));
+            Assert.That(() => this.productStock[2], Throws.TypeOf<IndexOutOfRangeException>());
+        }
         [Test]
         public void AddMethodShouldAddNewProductInCOllection()
         {
@@ -239,8 +271,35 @@
 
             var result = this.productStock.ToList();
 
-            Assert.That(result[0].Label, Is.EqualTo("Chia"));
+            Assert.That(result.GetEnumerator(), Is.EqualTo("Chia"));
             Assert.That(result[1].Label, Is.EqualTo("Banana"));
+        }
+
+        [Test]
+        public void RemoveMethodShouldRemoveCorectlyAndReturnTrue()
+        {
+            IProduct chia = new Product(Label, Price, Quantity);
+            IProduct banana = new Product("Banana", 4.00M, 1);
+
+            this.productStock.Add(chia);
+            this.productStock.Add(banana);
+
+            Assert.That(this.productStock.Remove(banana), Is.EqualTo(true));
+
+            Assert.AreEqual(1, this.productStock.Count);
+        }
+
+        [Test]
+        public void RemoveMethodShouldRemoveCorectlyAndReturnFalse()
+        {
+            IProduct chia = new Product(Label, Price, Quantity);
+            IProduct banana = new Product("Banana", 4.00M, 1);
+
+            this.productStock.Add(chia);
+
+            Assert.That(this.productStock.Remove(banana), Is.EqualTo(false));
+
+            Assert.AreEqual(1, this.productStock.Count);
         }
 
         private void CreateProduct()

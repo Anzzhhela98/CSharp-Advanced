@@ -1,5 +1,4 @@
 ﻿using INStock.Contracts;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace INStock
