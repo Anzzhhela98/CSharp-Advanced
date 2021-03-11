@@ -250,7 +250,7 @@ namespace Chainblock.Tests
             this.allTransactions.Add(thirdTransaction);
 
             List<ITransaction> expected = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
-                expected = expected.OrderByDescending(x => x.Amount).ThenBy(x => x.Id).ToList();
+            expected = expected.OrderByDescending(x => x.Amount).ThenBy(x => x.Id).ToList();
             List<ITransaction> actual = this.allTransactions.GetAllOrderedByAmountDescendingThenById().ToList();
 
             CollectionAssert.AreEqual(expected, actual);
@@ -268,11 +268,11 @@ namespace Chainblock.Tests
             this.allTransactions.Add(thirdTransaction);
             this.allTransactions.Add(this.transaction);
 
-            List<ITransaction> expectedTransactions = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction}; 
-                expectedTransactions = expectedTransactions
-                                                     .Where(x => x.From == "Jiji")
-                                                     .OrderByDescending(x => x.Amount)
-                                                     .ToList();
+            List<ITransaction> expectedTransactions = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
+            expectedTransactions = expectedTransactions
+                                                 .Where(x => x.From == "Jiji")
+                                                 .OrderByDescending(x => x.Amount)
+                                                 .ToList();
 
             List<ITransaction> actualTransactions = this.allTransactions.GetBySenderOrderedByAmountDescending("Jiji").ToList();
 
@@ -286,6 +286,155 @@ namespace Chainblock.Tests
             {
                 this.allTransactions.GetBySenderOrderedByAmountDescending("Benni");
             });
+        }
+
+        [Test]
+        public void GetByReceiverAndAmountRangeShouldReturnCollectionOfGivenReciversWithThathAmountRange()
+        {
+            ITransaction firstTransaction = new Transaction(96, TransactionStatus.Aborted, "Jiji", "Didi", 50);
+            ITransaction secondTransaction = new Transaction(93, TransactionStatus.Aborted, "Didi", "Didi", 120);
+            ITransaction thirdTransaction = new Transaction(89, TransactionStatus.Aborted, "Pepi", "Didi", 150);
+
+            this.allTransactions.Add(firstTransaction);
+            this.allTransactions.Add(secondTransaction);
+            this.allTransactions.Add(thirdTransaction);
+            this.allTransactions.Add(this.transaction);
+
+            List<ITransaction> expected = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
+            List<ITransaction> actual = this.allTransactions.GetByReceiverAndAmountRange("Didi", 50, 150).ToList();
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetByReceiverAndAmountRangeShouldThrowInvalidOperationExeption()
+        {
+            CreateNeTransaction();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                this.allTransactions.GetByReceiverAndAmountRange("Anzhela", 50, 100);
+            });
+        }
+
+        [Test]
+        public void GetByReceiverOrderedByAmountThenByIdShouldReturnCollectionOfGivenReciversWithThathAmountRange()
+        {
+            ITransaction firstTransaction = new Transaction(96, TransactionStatus.Aborted, "Jiji", "Didi", 50);
+            ITransaction secondTransaction = new Transaction(93, TransactionStatus.Aborted, "Didi", "Didi", 120);
+            ITransaction thirdTransaction = new Transaction(89, TransactionStatus.Aborted, "Pepi", "Didi", 150);
+
+            this.allTransactions.Add(firstTransaction);
+            this.allTransactions.Add(secondTransaction);
+            this.allTransactions.Add(thirdTransaction);
+            this.allTransactions.Add(this.transaction);
+
+            List<ITransaction> expected = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
+            List<ITransaction> actual = this.allTransactions.GetByReceiverOrderedByAmountThenById("Didi").ToList();
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetByReceiverOrderedByAmountThenByIdShouldThrowInvalidOperationExeption()
+        {
+            CreateNeTransaction();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                this.allTransactions.GetByReceiverOrderedByAmountThenById("Anzhela");
+            });
+        }
+
+        [Test]
+        public void GetBySenderAndMinimumAmountDescendingdShouldReturnCollectionOfGivenSendersWithSortedAmount()
+        {
+            ITransaction firstTransaction = new Transaction(96, TransactionStatus.Aborted, "Didi", "Jeni", 50);
+            ITransaction secondTransaction = new Transaction(93, TransactionStatus.Aborted, "Didi", "Jeni", 120);
+            ITransaction thirdTransaction = new Transaction(89, TransactionStatus.Aborted, "Didi", "Anna", 150);
+
+            this.allTransactions.Add(firstTransaction);
+            this.allTransactions.Add(secondTransaction);
+            this.allTransactions.Add(thirdTransaction);
+            this.allTransactions.Add(this.transaction);
+
+            List<ITransaction> expected = new List<ITransaction>() { thirdTransaction, secondTransaction, firstTransaction };
+
+            List<ITransaction> actual = this.allTransactions.GetBySenderAndMinimumAmountDescending("Didi", 30).ToList();
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetBySenderAndMinimumAmountDescendingdShouldThrowInavlidOperationExeption()
+        {
+            CreateNeTransaction();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                this.allTransactions.GetBySenderAndMinimumAmountDescending("Anhela", 30);
+            });
+        }
+
+        [Test]
+        public void GetByTransactionStatusAndMaximumAmountShouldReturnCorrectlyTransactionsWithGivenStatusAndamount()
+        {
+
+            ITransaction firstTransaction = new Transaction(96, TransactionStatus.Aborted, "Didi", "Jeni", 50);
+            ITransaction secondTransaction = new Transaction(93, TransactionStatus.Aborted, "Didi", "Jeni", 120);
+            ITransaction thirdTransaction = new Transaction(89, TransactionStatus.Aborted, "Didi", "Anna", 150);
+
+            this.allTransactions.Add(firstTransaction);
+            this.allTransactions.Add(secondTransaction);
+            this.allTransactions.Add(thirdTransaction);
+            this.allTransactions.Add(this.transaction);
+
+            List<ITransaction> expected = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
+
+            List<ITransaction> actual = this.allTransactions.GetByTransactionStatusAndMaximumAmount(TransactionStatus.Aborted, 150).ToList();
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetByTransactionStatusAndMaximumAmountShouldReturnEmptyCollection()
+        {
+            CreateNeTransaction();
+
+            List<ITransaction> transactions =
+                 this.allTransactions.GetByTransactionStatusAndMaximumAmount(TransactionStatus.Failed, 50).ToList();
+
+            Assert.AreEqual(0, transactions.Count);
+        }
+
+        [Test]
+        public void GetEnumeratorSholdReturnCorrectly()
+        {
+            ITransaction firstTransaction = new Transaction(1, TransactionStatus.Aborted, "Jiji", "Beni", 50);
+            ITransaction secondTransaction = new Transaction(2, TransactionStatus.Aborted, "Didi", "Veni", 120);
+            ITransaction thirdTransaction = new Transaction(3, TransactionStatus.Aborted, "Pepi", "Didi", 150);
+
+            this.allTransactions.Add(firstTransaction);
+            this.allTransactions.Add(secondTransaction);
+            this.allTransactions.Add(thirdTransaction);
+
+            List<ITransaction> expected = new List<ITransaction>() { firstTransaction, secondTransaction, thirdTransaction };
+
+            IEnumerator<ITransaction> actual = this.allTransactions.GetEnumerator();
+
+            int index = 0;
+
+            while (actual.MoveNext())
+            {
+
+                ITransaction currentTransaction = actual.Current;
+                Assert.AreEqual(expected[index++].Id, currentTransaction.Id);
+            }
+
         }
 
         private void CreateNeTransaction()
