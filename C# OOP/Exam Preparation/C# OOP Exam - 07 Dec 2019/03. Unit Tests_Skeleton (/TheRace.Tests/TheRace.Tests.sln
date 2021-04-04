@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheRace.Tests", "TheRace.Tests.csproj", "{734DD3A1-16EC-4309-8E49-8EE6421D3843}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheRace", "..\TheRace\TheRace.csproj", "{9C29B45E-3B41-49B8-8761-56FB419DC1B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{734DD3A1-16EC-4309-8E49-8EE6421D3843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734DD3A1-16EC-4309-8E49-8EE6421D3843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734DD3A1-16EC-4309-8E49-8EE6421D3843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734DD3A1-16EC-4309-8E49-8EE6421D3843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C29B45E-3B41-49B8-8761-56FB419DC1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C29B45E-3B41-49B8-8761-56FB419DC1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C29B45E-3B41-49B8-8761-56FB419DC1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C29B45E-3B41-49B8-8761-56FB419DC1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E4B05B5F-7112-4C84-865D-F7BFB94E43F1}
+	EndGlobalSection
+EndGlobal
