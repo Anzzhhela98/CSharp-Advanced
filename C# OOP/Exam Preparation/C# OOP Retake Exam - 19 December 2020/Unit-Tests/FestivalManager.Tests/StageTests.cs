@@ -3,9 +3,10 @@
 // Test ONLY the Stage class. 
 namespace FestivalManager.Tests
 {
-  //using FestivalManager.Entities;
+    //using FestivalManager.Entities;
     using NUnit.Framework;
-    using System;  
+    using System;
+    using System.Linq;
 
     [TestFixture]
     public class StageTests
@@ -23,27 +24,93 @@ namespace FestivalManager.Tests
         }
 
         [Test]
-        public void AddPerformerShouldThrowExceptionInvalidAge()
+        public void ConstructorShouldWorkCorect()
         {
-            Assert.Throws<ArgumentException>(() => this.stage.AddPerformer(new Performer("JZ", "Smith", 16)));
+            Assert.IsNotNull(this.performer);
+        }
+
+        [Test]
+        public void IReadOnlyPerformers()
+        {
+            Assert.IsNotNull(this.stage.Performers);
+        }
+
+        [TestCase(null)]
+        public void AddPerformerShouldThrowArgumentNullException(Performer performer)
+        {
+            Assert.Throws<ArgumentNullException>(() => this.stage.AddPerformer(performer));
+        }
+
+        [Test]
+        public void AddPerformerShouldThrowArgumenExceptionIfPerformerAgeAreLessThan18()
+        {
+            Performer performer = new Performer("DI", "ZI", 16);
+            Assert.Throws<ArgumentException>(() => this.stage.AddPerformer(performer));
         }
 
         [Test]
         public void AddPerformerShouldAddCorect()
         {
+            Performer performer = new Performer("DI", "ZI", 26);
+            this.stage.AddPerformer(performer);
+            this.stage.AddPerformer(this.performer);
 
-            this.stage.AddPerformer(new Performer("JZ", "Smith", 20));
-            this.stage.AddPerformer(new Performer("Seina", "Smith", 30));
+            int expectedCount = 2;
+            Assert.AreEqual(expectedCount, this.stage.Performers.Count);
+        }
 
-            Assert.AreEqual(2, this.stage.Performers.Count);
+        [TestCase(null)]
+        public void AddSongShouldThrowArgumentNullException(Song song)
+        {
+            Assert.Throws<ArgumentNullException>(() => this.stage.AddSong(song));
         }
 
         [Test]
-        public void AddPerformerShouldTrowException()
+        public void AddSongShouldThrowArgumenExceptionIfDurationIsLessThanOneMinute()
         {
-            Performer performer = null;
+            Song song = new Song("FLy", new TimeSpan(0, 0, 30));
+            Assert.Throws<ArgumentException>(() => this.stage.AddSong(song));
+        }
 
-            Assert.Throws<ArgumentNullException>(() => this.stage.AddPerformer(performer));
+        [Test]
+        public void AddSongShouldAddCorect()
+        {
+            Song song = new Song("FLy", new TimeSpan(0, 1, 30));
+            this.stage.AddSong(song);
+            /* Assert.AreEqual(1, ); *///?????
+        }
+
+        [TestCase(null, "Jesi")]
+        [TestCase("Fly", null)]
+        public void AddSongToPerformerShouldThrowArgumentNullException(string songName, string performerName)
+        {
+            Assert.Throws<ArgumentNullException>(() => this.stage.AddSongToPerformer(songName, performerName));
+        }
+
+        [Test]
+        public void AddSongToPerformerShouldAddCorect()
+        {
+            this.stage.AddPerformer(this.performer);
+            this.stage.AddSong(this.song);
+
+
+            string expected =   $"{song} will be performed by {performer}";
+            Assert.AreEqual(expected, stage.AddSongToPerformer(song.Name, performer.FullName));
+
+            Assert.AreEqual(1, this.performer.SongList.Count);
+        }
+
+        [Test]
+        public void Play()
+        {
+            this.stage.AddPerformer(this.performer);
+            this.performer.SongList.Add(this.song);
+
+            var songsCount = this.stage.Performers.Sum(p => p.SongList.Count());
+
+            string expected = $"{this.stage.Performers.Count} performers played {songsCount} songs";
+
+            Assert.AreEqual(expected, this.stage.Play());
         }
     }
 }
