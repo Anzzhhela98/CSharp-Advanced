@@ -116,7 +116,7 @@ namespace OnlineShop.Models.Products.Computers
             sb.AppendLine(String.Format(SuccessMessages.ComputerPeripheralsToString, this.peripherals.Count, value));
             foreach (var peripheral in peripherals)
             {
-                sb.AppendLine($"  {peripheral.ToString()}");
+                sb.AppendLine($"  {peripheral}");
             }
 
             return sb.ToString().TrimEnd();

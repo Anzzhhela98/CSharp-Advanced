@@ -138,12 +138,6 @@ namespace OnlineShop.Core
             var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
             var component = computer.Components.FirstOrDefault(x => x.GetType().Name == componentType);
 
-            //if (component==null)
-            //{
-            //    throw new ArgumentException(
-            //        String.Format(ExceptionMessages.NotExistingComponent, componentType,computer.GetType().Name, computerId));
-            //}
-
             computer.RemoveComponent(component.GetType().Name);
             this.components.Remove(component);
 
@@ -156,12 +150,6 @@ namespace OnlineShop.Core
 
             var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
             var perihal = this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType);
-
-            //if (perihal == null)
-            //{
-            //    throw new ArgumentException(
-            //        String.Format(ExceptionMessages.NotExistingComponent, peripheralType, computer.GetType().Name, computerId));
-            //}
 
             computer.RemovePeripheral(perihal.GetType().Name);
             this.peripherals.Remove(perihal);
