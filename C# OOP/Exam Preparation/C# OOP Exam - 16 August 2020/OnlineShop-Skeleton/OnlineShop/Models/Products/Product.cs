@@ -2,7 +2,7 @@
 using System;
 namespace OnlineShop.Models.Products
 {
-    public  class Product : IProduct
+    public abstract class Product : IProduct
     {
         private const int MINIMUM_VALUE = 1;
         private int id;
@@ -89,11 +89,17 @@ namespace OnlineShop.Models.Products
             }
 
 
-        }        /*Цялостно представяне*/
+        }  
 
         public override string ToString()
         {
-            return $"Overall Performance: {this.OverallPerformance:F2}. Price: {this.Price:F2} - {this.GetType().Name}: {this.Manufacturer} {this.Model} (Id: {this.Id})";
+            return string.Format(SuccessMessages.ProductToString,
+                this.OverallPerformance.ToString("f2"),
+                this.Price.ToString("f2"),
+                this.GetType().Name,
+                this.Manufacturer,
+                this.Model,
+                this.Id);
         }
 
     }
