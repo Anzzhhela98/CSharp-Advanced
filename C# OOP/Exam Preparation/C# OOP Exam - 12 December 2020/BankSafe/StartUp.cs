@@ -6,7 +6,6 @@ namespace BankSafe
     {
         public static void Main(string[] args)
         {
-
         }
     }
 }

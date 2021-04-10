@@ -10,7 +10,7 @@ namespace WarCroft.Entities.Inventory
     {
         private const int DefaultCapacity = 100;
         private int capacity;
-        private ICollection<Item> items;
+        private List<Item> items;
         protected Bag(int capacity)
         {
             this.Capacity = capacity;
@@ -35,7 +35,7 @@ namespace WarCroft.Entities.Inventory
 
         public int Load => this.Items.Sum(i => i.Weight);
 
-        public IReadOnlyCollection<Item> Items => this.items.ToList().AsReadOnly();
+        public IReadOnlyCollection<Item> Items => this.items.AsReadOnly();
 
         public void AddItem(Item item)
         {
@@ -43,6 +43,7 @@ namespace WarCroft.Entities.Inventory
             {
                 throw new InvalidOperationException(ExceptionMessages.ExceedMaximumBagCapacity);
             }
+
             this.items.Add(item);
         }
 
@@ -59,6 +60,7 @@ namespace WarCroft.Entities.Inventory
             }
 
             Item item = this.items.FirstOrDefault(x => x.GetType().Name == name);
+            this.items.Remove(item);
 
             return item;
         }

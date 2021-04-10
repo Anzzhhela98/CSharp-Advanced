@@ -1,4 +1,8 @@
-﻿namespace BankSafe
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BankSafe
 {
     public class Item
     {

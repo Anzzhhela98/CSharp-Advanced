@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using Bakery.Utilities.Messages;
 using System.Collections.Generic;
 using Bakery.Models.Drinks.Contracts;
 using Bakery.Models.Tables.Contracts;
 using Bakery.Models.BakedFoods.Contracts;
+using System.Text;
 
 namespace Bakery.Models.Tables
 {
     public abstract class Table : ITable
     {
-        private readonly  List<IBakedFood> foodOrders;
-        private readonly List<IDrink> drinkOrders;
+        private  List<IBakedFood> foodOrders;
+        private  List<IDrink> drinkOrders;
 
         private int numberOfPeople;
         private int capacity;
@@ -26,11 +26,8 @@ namespace Bakery.Models.Tables
             this.foodOrders = new List<IBakedFood>();
             this.drinkOrders = new List<IDrink>();
         }
-        private IReadOnlyCollection<IBakedFood> FoodOrders
-           => this.foodOrders.AsReadOnly();
 
-        private IReadOnlyCollection<IDrink> DrinkOrders
-            => this.drinkOrders.AsReadOnly();
+        public int TableNumber { get; private set; }
 
         public int Capacity
         {
@@ -44,9 +41,8 @@ namespace Bakery.Models.Tables
                 this.capacity = value;
             }
         }
-        public int TableNumber { get; private set; }
+
         public decimal PricePerPerson { get; private set; }
-        public bool IsReserved { get; private set; }
 
         public int NumberOfPeople
         {
@@ -61,6 +57,7 @@ namespace Bakery.Models.Tables
             }
         }
 
+        public bool IsReserved { get; private set; }
 
         public decimal Price => this.foodOrders.Select(f => f.Price).Sum()
                                + this.drinkOrders.Select(d => d.Price).Sum()

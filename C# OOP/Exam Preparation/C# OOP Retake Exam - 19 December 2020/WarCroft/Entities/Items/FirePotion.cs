@@ -16,8 +16,7 @@ namespace WarCroft.Entities.Items
 
             if (character.Health > Points)
             {
-                character.Health -= 20;
-
+                character.Health -= Points;
             }
             else
             {

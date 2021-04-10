@@ -46,7 +46,6 @@ namespace WarCroft.Entities.Characters.Contracts
                 {
                     this.health = value;
                 }
-
             }
         }
 
@@ -56,7 +55,7 @@ namespace WarCroft.Entities.Characters.Contracts
             get { return this.armor; }
             private set
             {
-                if (value > 0)
+                if (value >0)
                 {
                     this.armor = value;
                 }
@@ -82,9 +81,9 @@ namespace WarCroft.Entities.Characters.Contracts
             if (this.Armor < hitPoints)
             {
                 hitPoints -= this.Armor;
-                this.armor = 0;
+                this.Armor = 0;
 
-                if (this.Health > hitPoints)
+                if (this.Health >= hitPoints)
                 {
                     this.Health -= hitPoints;
                 }
@@ -103,14 +102,6 @@ namespace WarCroft.Entities.Characters.Contracts
         {
             EnsureAlive();
             item.AffectCharacter(this);
-        }
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            string isAlive = this.IsAlive == true ? "Alive" : "Dead";
-            sb.AppendLine($"{Name} - HP: {Health}/{BaseHealth}, AP: {Armor}/{BaseArmor}, Status: {isAlive}");
-            return sb.ToString().TrimEnd();
         }
     }
 }

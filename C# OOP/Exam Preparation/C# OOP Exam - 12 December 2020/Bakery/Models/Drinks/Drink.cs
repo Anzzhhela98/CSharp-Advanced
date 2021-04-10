@@ -72,6 +72,6 @@ namespace Bakery.Models.Drinks
             }
         }
 
-        public override string ToString() => $"{this.GetType().Name} {this.Brand} - {this.Portion}ml - {this.Price:F2}lv";
+        public virtual string ToString() => $"{this.GetType().Name} {this.Brand} - {this.Portion}ml - {this.Price:F2}lv";
     }
 }

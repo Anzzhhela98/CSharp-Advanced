@@ -15,7 +15,7 @@ namespace WarCroft
             var engine = new Engine(reader, writer);
             engine.Run();
 
-                /* Use the below configuration instead of the usual one if you wish to print all output messages together after the inputs for easier comparison with the example output. */
+            /* Use the below configuration instead of the usual one if you wish to print all output messages together after the inputs for easier comparison with the example output. */
 
             //IReader reader = new ConsoleReader();
             //var sbWriter = new StringBuilderWriter();
